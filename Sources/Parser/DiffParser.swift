@@ -141,8 +141,14 @@ public final class DiffParser {
         let trimmed = String(String(hunkData.dropFirst(3).dropLast(3)))
         let hunkText = trimmed.split(separator: " ")
 
-        let oldHunkInfo = hunkText[0].dropFirst(1).split(separator: ",")
-        let newHunkInfo = hunkText[1].dropFirst(1).split(separator: ",")
+        var oldHunkInfo = hunkText[0].dropFirst(1).split(separator: ",")
+        if oldHunkInfo.count < 2 {
+            oldHunkInfo.append("0")
+        }
+        var newHunkInfo = hunkText[1].dropFirst(1).split(separator: ",")
+        if newHunkInfo.count < 2 {
+            newHunkInfo.append("0")
+        }
 
         var hunkInfo: [String: Any] = [:]
         hunkInfo["oldLineStart"] = Int(oldHunkInfo[0])!

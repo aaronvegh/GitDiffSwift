@@ -135,7 +135,7 @@ public final class DiffParser {
 
         let indices = input.indices(where: { $0 == "@" })
         let hunkEndIndex = input.index(input.startIndex, offsetBy: indices[3] + 1)
-        let hunkData = input[input.startIndex...hunkEndIndex]
+        let hunkData = input[input.startIndex..<hunkEndIndex]
         let remainingText = String(input[hunkEndIndex..<input.endIndex])
 
         let trimmed = String(String(hunkData.dropFirst(3).dropLast(3)))

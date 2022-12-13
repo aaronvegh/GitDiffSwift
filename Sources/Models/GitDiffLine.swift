@@ -24,7 +24,7 @@ public struct GitDiffLine: Codable {
 
     public var newLine: Int
 
-    public var noNewLine = false
+    public var noNewLine: Bool = false
 
     internal var description: String {
         if noNewLine {

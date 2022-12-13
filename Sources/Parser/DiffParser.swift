@@ -56,9 +56,11 @@ public final class DiffParser {
         }
 
         let createHunk = {
-            var lastHunk = hunks.removeLast()
-            lastHunk["changes"] = changes
-            hunks.append(lastHunk)
+            if hunks.count > 0 {
+                var lastHunk = hunks.removeLast()
+                lastHunk["changes"] = changes
+                hunks.append(lastHunk)
+            }
             changes.removeAll()
         }
 

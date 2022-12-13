@@ -175,6 +175,7 @@ public final class DiffParser {
         lineInfo["text"] = line
         lineInfo["newLine"] = newLine
         lineInfo["oldLine"] = oldLine
+        lineInfo["noNewLine"] = false
 
         return lineInfo
     }

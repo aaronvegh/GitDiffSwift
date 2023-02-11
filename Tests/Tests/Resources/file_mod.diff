@@ -1,0 +1,14 @@
+diff --git a/--1--Intermission b/--1--Intermission
+index c01be7d..4d323d5 100644
+--- a/--1--Intermission
++++ b/--1--Intermission
+@@ -1,4 +1,5 @@
+ Intermission!
+ Here’s some new text to talk about the intermission, a point in between two larger parts. Or something like that.
+ Or something else SOOOORTA like that.
+-Here's some more content in the intermission. Like that.
+\ No newline at end of file
++Here's some more content in the intermission. Like that.
++With net-new content.
+\ No newline at end of file
+

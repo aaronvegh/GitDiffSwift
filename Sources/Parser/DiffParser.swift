@@ -12,10 +12,14 @@ public final class DiffParser {
 
     internal enum GitPrefix {
         internal static let diffHeader = "diff --git"
-        internal static let deletedFile = "+++ /dev/null"
+        internal static let newFile = "new file"
+        internal static let deletedFile = "deleted file"
+        internal static let renameFrom = "rename from"
+        internal static let renameTo = "rename to"
         internal static let addedFile = "--- /dev/null"
         internal static let previousFile = "--- a/"
         internal static let updatedFile = "+++ b/"
+        internal static let updatedNullFile = "+++ "
         internal static let hunk = "@@"
         internal static let newLine = "\\ No newline at end of file"
     }
@@ -40,6 +44,7 @@ public final class DiffParser {
 
         let createDiff = {
             diffInfo["hunks"] = hunks
+            diffInfo["diffType"] = "default"
 
             let data = try! JSONSerialization.data(withJSONObject: diffInfo, options: [])
             let decoder = JSONDecoder()
@@ -77,8 +82,14 @@ public final class DiffParser {
             case line.hasPrefix(GitPrefix.previousFile):
                 let previousFilePath = line.removingPrefix(GitPrefix.previousFile)
                 diffInfo["previousFilePath"] = previousFilePath
+            case line.hasPrefix(GitPrefix.addedFile):
+                let previousFilePath = line.removingPrefix(GitPrefix.addedFile)
+                diffInfo["previousFilePath"] = previousFilePath
             case line.hasPrefix(GitPrefix.updatedFile):
                 let updatedFilePath = line.removingPrefix(GitPrefix.updatedFile)
+                diffInfo["updatedFilePath"] = updatedFilePath
+            case line.hasPrefix(GitPrefix.updatedNullFile):
+                let updatedFilePath = line.removingPrefix(GitPrefix.updatedNullFile)
                 diffInfo["updatedFilePath"] = updatedFilePath
             case line.hasPrefix(GitPrefix.hunk):
                 if !hunks.isEmpty {

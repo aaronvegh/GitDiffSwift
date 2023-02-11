@@ -10,9 +10,18 @@ import Foundation
 
 public struct GitDiff: Codable {
 
+    public enum DiffType: String, Codable {
+        case newFile
+        case deleteFile
+        case renameFile
+        case `default`
+    }
+
     public var previousFilePath: String
 
     public var updatedFilePath: String
+
+    public var diffType: DiffType = .default
 
     public var index: GitIndex
 

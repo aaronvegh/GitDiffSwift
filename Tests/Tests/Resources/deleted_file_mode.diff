@@ -1,0 +1,6 @@
+diff --git a/Sources/Layout/MessagesCollectionViewFlowLayout+Avatar.swift b/Sources/Layout/MessagesCollectionViewFlowLayout+Avatar.swift
+deleted file mode 100644
+index c9299456..00000000
+--- a/Sources/Layout/MessagesCollectionViewFlowLayout+Avatar.swift
++++ /dev/null
+@@ -1,85 +0,0 @@

@@ -15,43 +15,50 @@ class GitDiffTests: XCTestCase {
         return try? String(contentsOf: fileURL)
     }
 
-    func testFileMod() {
-        guard let subject = loadResource("file_mod") else { XCTFail(); return }
-
-        let parser = DiffParser(input: subject)
-        let diffs = parser.parseDiffedFiles()
-        XCTAssert(diffs.count > 0)
-        print(diffs)
-    }
-
     func testDeletedFile() {
-        guard let subject = loadResource("deleted_file_mode") else { XCTFail(); return }
+        guard let subject = loadResource("delete_file") else { XCTFail(); return }
 
         let parser = DiffParser(input: subject)
         let diffs = parser.parseDiffedFiles()
         let diff = diffs.first
 
-        XCTAssert(diff?.previousFilePath == "Sources/Layout/MessagesCollectionViewFlowLayout+Avatar.swift")
+        XCTAssert(diff?.diffType == .deleteFile)
+        XCTAssert(diff?.previousFilePath == "--2--Part 2/--1--Chapter 5")
         XCTAssert(diff?.updatedFilePath == "/dev/null")
         print(diffs)
     }
 
-    func testRenamedFile() {
-        guard let subject = loadResource("renamed_file_mode") else { XCTFail(); return }
+    func testFileMod() {
+        guard let subject = loadResource("file_mod") else { XCTFail(); return }
 
         let parser = DiffParser(input: subject)
         let diffs = parser.parseDiffedFiles()
-        XCTAssert(diffs.count > 0)
+        let diff = diffs.first
+
+        XCTAssert(diff?.diffType == .default)
+        print(diffs)
+    }
+
+    func testRenamedFile() {
+        guard let subject = loadResource("rename_file") else { XCTFail(); return }
+
+        let parser = DiffParser(input: subject)
+        let diffs = parser.parseDiffedFiles()
+        let firstDiff = diffs.first
+
+        XCTAssert(firstDiff?.diffType == .renameFile)
 
         print(diffs)
     }
 
     func testNewFile() {
-        guard let subject = loadResource("new_file_mode") else { XCTFail(); return }
+        guard let subject = loadResource("new_file") else { XCTFail(); return }
 
         let parser = DiffParser(input: subject)
         let diffs = parser.parseDiffedFiles()
-        XCTAssert(diffs.count > 0)
+        let diff = diffs.first
+
+        XCTAssert(diff?.diffType == .newFile)
 
         print(diffs)
     }

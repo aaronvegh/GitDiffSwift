@@ -14,12 +14,11 @@ let package = Package(
       .testTarget(name: "Tests",
                   dependencies: ["GitDiffSwift"],
                   resources: [
-                    .copy("Resources/deleted_file_mode.diff"),
-                    .copy("Resources/multi_file_change.diff"),
-                    .copy("Resources/new_file_mode.diff"),
-                    .copy("Resources/no_new_line.diff"),
-                    .copy("Resources/renamed_file_mode.diff"),
-                    .copy("Resources/file_mod.diff")
+                    .copy("Resources/delete_file.diff"),
+                    .copy("Resources/file_mod.diff"),
+                    .copy("Resources/multi_diff_add_delete.diff"),
+                    .copy("Resources/new_file.diff"),
+                    .copy("Resources/rename_file.diff")
                   ]),
    ]
 )

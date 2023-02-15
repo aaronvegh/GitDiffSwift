@@ -23,7 +23,7 @@ public struct GitDiff: Codable {
 
     public var diffType: DiffType = .default
 
-    public var index: GitIndex
+    public var index: GitIndex?
 
     public var hunks: [GitHunk]
 
@@ -34,7 +34,7 @@ public struct GitDiff: Codable {
         let diffHeader = prefix + " " + fileA + " " + fileB
         let old = "--- " + fileA
         let new = "+++ " + fileB
-        let headerContent = diffHeader + "\n" + index.description + "\n" + old + "\n" + new
+        let headerContent = diffHeader + "\n" + (index?.description ?? "noindex") + "\n" + old + "\n" + new
         var body = headerContent
         for hunk in hunks {
             body += "\n"

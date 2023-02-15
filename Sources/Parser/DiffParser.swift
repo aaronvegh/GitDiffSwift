@@ -44,7 +44,7 @@ public final class DiffParser {
 
         let createDiff = {
             diffInfo["hunks"] = hunks
-            diffInfo["diffType"] = "default"
+            diffInfo["diffType"] = diffInfo["diffType"] == nil ? "default" : diffInfo["diffType"]
 
             let data = try! JSONSerialization.data(withJSONObject: diffInfo, options: [])
             let decoder = JSONDecoder()
@@ -79,17 +79,33 @@ public final class DiffParser {
                     }
                     createDiff()
                 }
+                let parsingLine = line.removingPrefix(GitPrefix.diffHeader)
+                let aFileRegex = NSRegularExpression("a/([a-zA-Z0-9-]*)")
+                let bFileRegex = NSRegularExpression("b/([a-zA-Z0-9-]*)")
+                diffInfo["previousFilePath"] = aFileRegex.firstMatch(parsingLine)
+                diffInfo["updatedFilePath"] = bFileRegex.firstMatch(parsingLine)
             case line.hasPrefix(GitPrefix.previousFile):
                 let previousFilePath = line.removingPrefix(GitPrefix.previousFile)
                 diffInfo["previousFilePath"] = previousFilePath
             case line.hasPrefix(GitPrefix.addedFile):
                 let previousFilePath = line.removingPrefix(GitPrefix.addedFile)
+                diffInfo["diffType"] = GitDiff.DiffType.newFile.rawValue
+                diffInfo["previousFilePath"] = previousFilePath
+            case line.hasPrefix(GitPrefix.newFile):
+                diffInfo["diffType"] = GitDiff.DiffType.newFile.rawValue
+            case line.hasPrefix(GitPrefix.renameFrom):
+                let previousFilePath = line.removingPrefix(GitPrefix.renameFrom)
+                diffInfo["diffType"] = GitDiff.DiffType.renameFile.rawValue
                 diffInfo["previousFilePath"] = previousFilePath
             case line.hasPrefix(GitPrefix.updatedFile):
                 let updatedFilePath = line.removingPrefix(GitPrefix.updatedFile)
                 diffInfo["updatedFilePath"] = updatedFilePath
             case line.hasPrefix(GitPrefix.updatedNullFile):
                 let updatedFilePath = line.removingPrefix(GitPrefix.updatedNullFile)
+                diffInfo["diffType"] = GitDiff.DiffType.deleteFile.rawValue
+                diffInfo["updatedFilePath"] = updatedFilePath
+            case line.hasPrefix(GitPrefix.renameTo):
+                let updatedFilePath = line.removingPrefix(GitPrefix.renameTo)
                 diffInfo["updatedFilePath"] = updatedFilePath
             case line.hasPrefix(GitPrefix.hunk):
                 if !hunks.isEmpty {

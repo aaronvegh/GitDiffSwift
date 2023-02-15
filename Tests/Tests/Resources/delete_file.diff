@@ -1,0 +1,14 @@
+commit ee342c8fd3e2233fe7f6f6efad298ca53d46032d (HEAD -> main)
+Author: WriteStuff <author@writestuff.com>
+Date:   Fri Feb 10 20:39:14 2023 -0500
+
+    2023-02-11T01:39:14Z
+
+diff --git a/--2--Part 2/--1--Chapter 5 b/--2--Part 2/--1--Chapter 5
+deleted file mode 100644
+index 1d36cf5..0000000
+--- a/--2--Part 2/--1--Chapter 5
++++ /dev/null
+@@ -1 +0,0 @@
+- It’s Chapter 5, bitches! What did you think was gonna happen?
+\ No newline at end of file

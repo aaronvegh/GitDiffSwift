@@ -63,4 +63,17 @@ class GitDiffTests: XCTestCase {
         print(diffs)
     }
 
+    func testMultipleModeFile() {
+        guard let subject = loadResource("multi_diff_add_delete") else { XCTFail(); return }
+
+        let parser = DiffParser(input: subject)
+        let diffs = parser.parseDiffedFiles()
+        let addDiff = diffs[0]
+        let deleteDiff = diffs[1]
+
+        XCTAssertNotNil(addDiff)
+        XCTAssertNotNil(deleteDiff)
+
+    }
+
 }

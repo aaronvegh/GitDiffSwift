@@ -83,7 +83,7 @@ public final class DiffParser {
                 let aFileRegex = NSRegularExpression("a/([a-zA-Z0-9-/\\s.]*) b/")
                 let bFileRegex = NSRegularExpression("b/([a-zA-Z0-9-/\\s.]*)")
                 diffInfo["previousFilePath"] = aFileRegex.firstMatch(parsingLine)?.replacingOccurrences(of: " b/", with: "").replacingOccurrences(of: "a/", with: "")
-                diffInfo["updatedFilePath"] = bFileRegex.firstMatch(parsingLine)?.replacingOccurrences(of: " b/", with: "")
+                diffInfo["updatedFilePath"] = bFileRegex.firstMatch(parsingLine)?.replacingOccurrences(of: "b/", with: "")
             case line.hasPrefix(GitPrefix.deletedFile):
                 diffInfo["diffType"] = GitDiff.DiffType.deleteFile.rawValue
             case line.hasPrefix(GitPrefix.previousFile):

@@ -80,9 +80,9 @@ public final class DiffParser {
                     createDiff()
                 }
                 let parsingLine = line.removingPrefix(GitPrefix.diffHeader)
-                let aFileRegex = NSRegularExpression("a/([a-zA-Z0-9-]*)")
-                let bFileRegex = NSRegularExpression("b/([a-zA-Z0-9-]*)")
-                diffInfo["previousFilePath"] = aFileRegex.firstMatch(parsingLine)
+                let aFileRegex = NSRegularExpression("a/([a-zA-Z0-9-/\\s]*) b/")
+                let bFileRegex = NSRegularExpression("b/([a-zA-Z0-9-/\\s]*)")
+                diffInfo["previousFilePath"] = aFileRegex.firstMatch(parsingLine)?.replacingOccurrences(of: " b/", with: "")
                 diffInfo["updatedFilePath"] = bFileRegex.firstMatch(parsingLine)
             case line.hasPrefix(GitPrefix.previousFile):
                 let previousFilePath = line.removingPrefix(GitPrefix.previousFile)
